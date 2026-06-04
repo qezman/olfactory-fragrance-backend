@@ -1,4 +1,4 @@
-import { Fragrance } from "@/types/fragrance";
+import { Fragrance } from "@/types/fragrance.js";
 
 const cedarGallery = [
   "/images/cedar-01.jpg",
@@ -633,3 +633,4 @@ export function getFragrancesByFamily(family: string): Fragrance[] {
     f.family.includes(family as Fragrance["family"][number]),
   );
 }
+

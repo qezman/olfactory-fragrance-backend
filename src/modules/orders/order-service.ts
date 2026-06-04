@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { HttpError } from '@/errors/http-error.js';
+import { FragranceSize } from '@/types/fragrance.js';
 import { findFragrance } from '@/modules/fragrances/fragrance-service.js';
 import { getPromoRate, normalizePromoCode } from '@/modules/promos/promo-service.js';
 import { CreateOrderInput } from './order-schema.js';
@@ -48,7 +49,7 @@ function buildLineItems(items: CreateOrderInput['items']): OrderLineItem[] {
       throw new HttpError(400, 'FRAGRANCE_NOT_FOUND', `Fragrance ${item.fragranceSlug} was not found.`);
     }
 
-    const size = fragrance.sizes.find((candidate) => candidate.ml === item.size);
+    const size = fragrance.sizes.find((candidate: FragranceSize) => candidate.ml === item.size);
 
     if (!size) {
       throw new HttpError(400, 'FRAGRANCE_SIZE_NOT_FOUND', `${fragrance.name} is not available in ${item.size}ml.`);
@@ -102,3 +103,4 @@ export function createOrder(input: CreateOrderInput): Order {
 export function listOrders(): Order[] {
   return orders;
 }
+

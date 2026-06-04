@@ -1,4 +1,4 @@
-import { DiscoverySet } from '@/types/editorial';
+import { DiscoverySet } from '@/types/editorial.js';
 
 export const discoverySets: DiscoverySet[] = [
   {
@@ -30,3 +30,4 @@ export const discoverySets: DiscoverySet[] = [
 export function getSetBySlug(slug: string): DiscoverySet | undefined {
   return discoverySets.find(s => s.slug === slug);
 }
+

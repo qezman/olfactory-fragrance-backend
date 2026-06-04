@@ -1,4 +1,4 @@
-import { EditorialArticle } from '@/types/editorial';
+import { EditorialArticle } from '@/types/editorial.js';
 
 export const articles: EditorialArticle[] = [
   {
@@ -108,3 +108,4 @@ export const articles: EditorialArticle[] = [
 export function getArticleBySlug(slug: string): EditorialArticle | undefined {
   return articles.find(a => a.slug === slug);
 }
+
