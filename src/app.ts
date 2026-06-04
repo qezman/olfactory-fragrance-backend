@@ -15,6 +15,7 @@ export function createApp() {
   app.use(express.json({ limit: '1mb' }));
   app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
+  app.get('/health', (req, res) => { res.json({ status: 'ok' }); });
   app.use('/api', apiRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);

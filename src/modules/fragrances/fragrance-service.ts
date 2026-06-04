@@ -1,5 +1,13 @@
 import { ScentFamily } from '@/types/fragrance.js';
-import { fragrances, getFragranceBySlug } from '@/data/mock-data/fragrances.js';
+import { PrismaClient } from '@prisma/client';
+
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+
+const connectionString = `${process.env.DATABASE_URL}`;
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 export interface FragranceFilters {
   family?: ScentFamily;
@@ -7,20 +15,34 @@ export interface FragranceFilters {
   isNew?: boolean;
 }
 
-export function listFragrances(filters: FragranceFilters) {
-  return fragrances.filter((fragrance) => {
-    const matchesFamily = filters.family ? fragrance.family.includes(filters.family) : true;
-    const matchesBestseller = typeof filters.isBestseller === 'boolean'
-      ? fragrance.isBestseller === filters.isBestseller
-      : true;
-    const matchesNew = typeof filters.isNew === 'boolean'
-      ? fragrance.isNew === filters.isNew
-      : true;
+export async function listFragrances(filters: FragranceFilters) {
+  const whereClause: any = {};
 
-    return matchesFamily && matchesBestseller && matchesNew;
+  if (filters.family) {
+    whereClause.family = { has: filters.family };
+  }
+  if (typeof filters.isBestseller === 'boolean') {
+    whereClause.isBestseller = filters.isBestseller;
+  }
+  if (typeof filters.isNew === 'boolean') {
+    whereClause.isNew = filters.isNew;
+  }
+
+  return prisma.fragrance.findMany({
+    where: whereClause,
+    include: {
+      sizes: true,
+      ingredients: true,
+    },
   });
 }
 
-export function findFragrance(slug: string) {
-  return getFragranceBySlug(slug);
+export async function findFragrance(slug: string) {
+  return prisma.fragrance.findUnique({
+    where: { slug },
+    include: {
+      sizes: true,
+      ingredients: true,
+    },
+  });
 }

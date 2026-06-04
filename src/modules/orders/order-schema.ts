@@ -19,7 +19,7 @@ export const createOrderSchema = z.object({
     city: z.string().min(1),
     country: z.string().min(1),
     method: z.enum(['standard', 'express', 'nextday']),
-    phone: z.string().min(6),
+    phone: z.string().min(6).optional().or(z.literal('')),
     postcode: z.string().min(1),
   }),
   items: z.array(orderItemSchema).min(1),

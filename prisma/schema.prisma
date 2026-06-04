@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Fragrance {
+  id           String          @id @default(uuid())
+  slug         String          @unique
+  name         String
+  tagline      String
+  family       String[]
+  topNotes     String[]
+  heartNotes   String[]
+  baseNotes    String[]
+  story        String
+  howItWears   Json
+  images       String[]
+  isBestseller Boolean         @default(false)
+  isNew        Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  sizes        FragranceSize[]
+  ingredients  Ingredient[]
+  orderItems   OrderItem[]
+}
+
+model FragranceSize {
+  id          String    @id @default(uuid())
+  fragranceId String
+  ml          Int
+  price       Float
+  fragrance   Fragrance @relation(fields: [fragranceId], references: [id], onDelete: Cascade)
+  
+  @@unique([fragranceId, ml])
+}
+
+model Ingredient {
+  id          String    @id @default(uuid())
+  fragranceId String
+  name        String
+  origin      String
+  description String
+  fragrance   Fragrance @relation(fields: [fragranceId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id           String      @id // e.g., OLF-XXXXXX
+  contactEmail String
+  contactPhone String?
+  firstName    String
+  lastName     String
+  delivery     Json
+  promoCode    String?
+  discount     Float       @default(0)
+  discountRate Float       @default(0)
+  shipping     Float       @default(0)
+  subtotal     Float
+  total        Float
+  createdAt    DateTime    @default(now())
+  
+  items        OrderItem[]
+}
+
+model OrderItem {
+  id            String    @id @default(uuid())
+  orderId       String
+  fragranceSlug String
+  name          String
+  price         Float
+  quantity      Int
+  size          Int
+  
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  fragranceId   String?
+  fragrance     Fragrance? @relation(fields: [fragranceId], references: [id], onDelete: SetNull)
+}

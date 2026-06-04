@@ -13,6 +13,8 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+# Generate Prisma client before building
+RUN npx prisma generate
 RUN npm run build
 
 # ── Stage 3: runner ────────────────────────────────────────────────────────────
@@ -25,7 +27,8 @@ ENV PORT=4000
 RUN addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 expressjs
 
-COPY --from=deps    --chown=expressjs:nodejs /app/node_modules ./node_modules
+# Copy deps from builder to ensure generated prisma client is included
+COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=expressjs:nodejs /app/dist         ./dist
 COPY --from=builder --chown=expressjs:nodejs /app/package.json ./package.json
 
