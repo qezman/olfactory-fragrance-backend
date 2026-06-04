@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: olfactory-fragrance-backend   # this is the hostname the frontend calls
+  labels:
+    app: olfactory-fragrance-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: olfactory-fragrance-backend
+  ports:
+    - port: 80
+      targetPort: 4000
+      protocol: TCP

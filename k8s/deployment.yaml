@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: olfactory-fragrance-backend
+  labels:
+    app: olfactory-fragrance-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: olfactory-fragrance-backend
+  template:
+    metadata:
+      labels:
+        app: olfactory-fragrance-backend
+    spec:
+      containers:
+        - name: backend
+          image: {{ ECR_REGISTRY }}/olfactory-fragrance-backend:{{ IMAGE_TAG }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - configMapRef:
+                name: olfactory-backend-config
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 4000
+            initialDelaySeconds: 20
+            periodSeconds: 15

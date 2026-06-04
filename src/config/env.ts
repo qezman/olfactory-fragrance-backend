@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 import { z } from 'zod';
 
-dotenv.config();
+dotenv.config({ path: '.env' });
+dotenv.config({ path: '.env.local', override: true }); // local overrides take priority
+
 
 const envSchema = z.object({
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
