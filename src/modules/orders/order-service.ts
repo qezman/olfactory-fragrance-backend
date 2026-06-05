@@ -4,13 +4,14 @@ import { findDiscoverySet } from '@/modules/discovery-sets/discovery-set-service
 import { findFragrance } from '@/modules/fragrances/fragrance-service.js';
 import { getPromoRate, normalizePromoCode } from '@/modules/promos/promo-service.js';
 import { CreateOrderInput } from './order-schema.js';
-import { PrismaClient } from '@prisma/client';
+import pkg from '@prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
+const { PrismaClient } = pkg;
 const prisma = new PrismaClient({ adapter });
 
 const deliveryPrices = {

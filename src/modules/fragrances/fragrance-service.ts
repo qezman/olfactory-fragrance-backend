@@ -1,5 +1,5 @@
 import { ScentFamily } from '@/types/fragrance.js';
-import { PrismaClient } from '@prisma/client';
+import pkg from '@prisma/client';
 
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
@@ -7,6 +7,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
+const { PrismaClient } = pkg;
 const prisma = new PrismaClient({ adapter });
 
 export interface FragranceFilters {
