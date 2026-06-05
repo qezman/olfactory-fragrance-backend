@@ -5,7 +5,6 @@ import { findFragrance } from '@/modules/fragrances/fragrance-service.js';
 import { getPromoRate, normalizePromoCode } from '@/modules/promos/promo-service.js';
 import { CreateOrderInput } from './order-schema.js';
 import { PrismaClient } from '@prisma/client';
-
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 
