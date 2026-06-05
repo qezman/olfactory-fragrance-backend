@@ -9,6 +9,7 @@ pipeline {
         CLUSTER_NAME    = 'eks-project-eks'
         NAMESPACE       = 'olfactory'
         HELM_RELEASE    = 'olfactory-backend'
+        FRONTEND_URL    = 'a0c8dfa58ebdf47ef9249224f6d34d60-786203290.us-east-1.elb.amazonaws.com'
     }
 
     stages {
