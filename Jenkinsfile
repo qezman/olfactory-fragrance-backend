@@ -24,6 +24,7 @@ pipeline {
         stage('Lint & Type Check') {
             steps {
                 sh 'npm ci'
+                sh 'npx prisma generate'
                 sh 'npm run lint'
             }
         }
