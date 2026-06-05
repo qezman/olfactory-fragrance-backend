@@ -28,7 +28,7 @@ RUN addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 expressjs
 
 # Copy prod deps from deps stage, compiled code from builder stage
-COPY --from=deps --chown=expressjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=expressjs:nodejs /app/dist ./dist
 COPY --from=builder --chown=expressjs:nodejs /app/package.json ./package.json
 
