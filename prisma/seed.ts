@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { PrismaClient } from '../../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { fragrances } from '../src/data/mock-data/fragrances.js';
 
 import { Pool } from 'pg';
