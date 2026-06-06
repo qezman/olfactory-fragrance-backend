@@ -1,23 +1,16 @@
-# Olfactory Fragrance Backend
+# Olfactory Fragrance — Backend
 
-Express API for the Olfactory fragrance storefront.
+REST API for the Olfactory Fragrance e-commerce platform built with Node.js, Express, TypeScript, and Prisma ORM.
 
-## Scripts
+## Stack
+- Node.js + Express
+- TypeScript
+- Prisma ORM
+- Supabase PostgreSQL
 
-- `npm run dev` starts the API with `tsx`.
-- `npm run build` compiles TypeScript to `dist`.
-- `npm start` runs the compiled server.
-- `npm test` runs the Vitest suite.
-- `npm run lint` type-checks the codebase.
+## Infrastructure
+Deployed on AWS EKS via Jenkins CI/CD. See infrastructure repo:
+https://github.com/qezman/Terraform-EKS-Helm-Jenkins
 
-## API
-
-- `GET /api/health`
-- `GET /api/fragrances?family=woody&isBestseller=true&isNew=false`
-- `GET /api/fragrances/:slug`
-- `GET /api/discovery-sets`
-- `GET /api/discovery-sets/:slug`
-- `GET /api/articles?category=essay`
-- `GET /api/articles/:slug`
-- `POST /api/promos/validate`
-- `POST /api/orders`
+<!-- ## Live URL
+https://qossim005.online/api/health -->
