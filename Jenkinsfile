@@ -31,7 +31,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'npm test || true'
+                sh 'npm test'
             }
         }
 
